@@ -32,6 +32,7 @@ const CompanySearchResults = () => {
     <Container>
       <Row>
         <Col xs={12}>
+          <Link to="/" className="me-2">Home</Link>
           <Link to="/favourite-companies">Favourite Companies</Link>
         </Col>
         <Col className="my-3">
