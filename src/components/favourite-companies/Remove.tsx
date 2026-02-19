@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux"
 import { Button } from "react-bootstrap"
-import { HeartFill  as HeartFillIcon, Dash as DashIcon } from "react-bootstrap-icons"
+import { HeartFill as HeartFillIcon, Dash as DashIcon } from "react-bootstrap-icons"
+import { removeCompanyFromFavouriteCompaniesAction } from "../../redux/actions"
 
 const RemoveComp = ({ company }) => {
   const dispatch = useDispatch()
@@ -8,10 +9,7 @@ const RemoveComp = ({ company }) => {
   return (
     <Button
       onClick={() => {
-        dispatch({
-          type: "REMOVE_COMPANY_FROM_FAVOURITE_COMPANIES",
-          payload: company,
-        })
+        removeCompanyFromFavouriteCompaniesAction(dispatch)({ company })
       }}
       variant="danger"
     >

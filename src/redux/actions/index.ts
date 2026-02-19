@@ -17,3 +17,12 @@ export const addCompanyToFavouriteCompaniesAction = (dispatch) => {
     })
   }
 }
+
+export const removeCompanyFromFavouriteCompaniesAction = (dispatch) => {
+  return ({ company }) => {
+    dispatch({
+      type: REMOVE_COMPANY_FROM_FAVOURITE_COMPANIES,
+      payload: company,
+    })
+  }
+}
