@@ -9,7 +9,7 @@ const RemoveComp = ({ company }) => {
   return (
     <Button
       onClick={() => {
-        removeCompanyFromFavouriteCompaniesAction(dispatch)({ company })
+        dispatch(removeCompanyFromFavouriteCompaniesAction(company))
       }}
       variant="danger"
     >

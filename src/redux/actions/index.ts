@@ -29,8 +29,8 @@ export const addCompanyToFavouriteCompaniesAction = (company) => {
   }
 }
 
-export const removeCompanyFromFavouriteCompaniesAction = (dispatch) => {
-  return ({ company }) => {
+export const removeCompanyFromFavouriteCompaniesAction = (company) => {
+  return (dispatch, getState) => {
     dispatch({
       type: REMOVE_COMPANY_FROM_FAVOURITE_COMPANIES,
       payload: company,
