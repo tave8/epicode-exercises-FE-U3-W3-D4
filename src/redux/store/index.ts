@@ -30,6 +30,7 @@ import { persistReducer, persistStore } from "redux-persist"
 const persistConfig = {
   storage: localStorage,
   key: "root",
+  whitelist: ["favouriteCompanies"]
 }
 
 const bigReducer = combineReducers({

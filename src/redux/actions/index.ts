@@ -12,12 +12,14 @@ export const SEARCH_COMPANIES = "SEARCH_COMPANIES"
 
 //***** ACTIONS: FUNCTIONS
 
+// come adattare questo pattern usando il getState
+
 // FAVOURITE COMPANIES
 export const addCompanyToFavouriteCompaniesAction = (dispatch) => {
   return ({ favouriteCompanies, company }) => {
     // check again that the company is not in favourites.
     if (isCompanyInFavourites({ favouriteCompanies })(company)) {
-      return
+      return 
     }
     dispatch({
       type: ADD_COMPANY_TO_FAVOURITE_COMPANIES,
