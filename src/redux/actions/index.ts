@@ -20,7 +20,8 @@ export const addCompanyToFavouriteCompaniesAction = (company) => {
     const favouriteCompanies = getState().favouriteCompanies
     // check again that the company is not in favourites.
     if (isCompanyInFavourites({ favouriteCompanies })(company)) {
-      return 
+      alert("Ops, it seems like this company is already in the favourite companies.")
+      return
     }
     dispatch({
       type: ADD_COMPANY_TO_FAVOURITE_COMPANIES,
@@ -48,8 +49,8 @@ export const setSearchCompaniesQueryAction = (query) => {
   }
 }
 
-export const setCompaniesSearchIsLoadingAction = (dispatch) => {
-  return (isLoading) => {
+export const setCompaniesSearchIsLoadingAction = (isLoading) => {
+  return (dispatch, getState) => {
     dispatch({
       type: SET_COMPANIES_SEARCH_IS_LOADING,
       payload: isLoading,
@@ -57,8 +58,8 @@ export const setCompaniesSearchIsLoadingAction = (dispatch) => {
   }
 }
 
-export const setCompaniesSearchIsErrorAction = (dispatch) => {
-  return (isError) => {
+export const setCompaniesSearchIsErrorAction = (isError) => {
+  return (dispatch, getState) => {
     dispatch({
       type: SET_COMPANIES_SEARCH_IS_ERROR,
       payload: isError,
@@ -73,14 +74,9 @@ export const searchCompaniesAction = () => {
       alert("Search cannot be empty.")
       return
     }
-    dispatch({
-      type: SET_COMPANIES_SEARCH_IS_LOADING,
-      payload: true,
-    })
-    dispatch({
-      type: SET_COMPANIES_SEARCH_IS_ERROR,
-      payload: false,
-    })
+
+    dispatch(setCompaniesSearchIsLoadingAction(true))
+    dispatch(setCompaniesSearchIsErrorAction(false))
 
     const baseEndpoint = "https://strive-benchmark.herokuapp.com/api/jobs?search="
     try {
@@ -91,34 +87,16 @@ export const searchCompaniesAction = () => {
           type: SEARCH_COMPANIES,
           payload: companies,
         })
-        dispatch({
-          type: SET_COMPANIES_SEARCH_IS_LOADING,
-          payload: false,
-        })
-        dispatch({
-          type: SET_COMPANIES_SEARCH_IS_ERROR,
-          payload: false,
-        })
+        dispatch(setCompaniesSearchIsLoadingAction(false))
+        dispatch(setCompaniesSearchIsErrorAction(false))
       } else {
-        dispatch({
-          type: SET_COMPANIES_SEARCH_IS_LOADING,
-          payload: false,
-        })
-        dispatch({
-          type: SET_COMPANIES_SEARCH_IS_ERROR,
-          payload: true,
-        })
+        dispatch(setCompaniesSearchIsLoadingAction(false))
+        dispatch(setCompaniesSearchIsErrorAction(true))
         alert("Error fetching results")
       }
     } catch (error) {
-      dispatch({
-        type: SET_COMPANIES_SEARCH_IS_LOADING,
-        payload: false,
-      })
-      dispatch({
-        type: SET_COMPANIES_SEARCH_IS_ERROR,
-        payload: true,
-      })
+      dispatch(setCompaniesSearchIsLoadingAction(false))
+      dispatch(setCompaniesSearchIsErrorAction(true))
       console.log(error)
     }
   }
