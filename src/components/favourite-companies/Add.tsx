@@ -18,7 +18,7 @@ const AddComp = ({ company, favouriteCompanies }: AddCompProps) => {
     <Button
       variant="success"
       onClick={() => {
-        addCompanyToFavouriteCompaniesAction(dispatch)({ favouriteCompanies, company })
+        dispatch(addCompanyToFavouriteCompaniesAction(company))
       }}
     >
       <PlusIcon size={20} />

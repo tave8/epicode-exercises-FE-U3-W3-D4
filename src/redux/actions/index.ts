@@ -15,8 +15,9 @@ export const SEARCH_COMPANIES = "SEARCH_COMPANIES"
 // come adattare questo pattern usando il getState
 
 // FAVOURITE COMPANIES
-export const addCompanyToFavouriteCompaniesAction = (dispatch) => {
-  return ({ favouriteCompanies, company }) => {
+export const addCompanyToFavouriteCompaniesAction = (company) => {
+  return (dispatch, getState) => {
+    const favouriteCompanies = getState().favouriteCompanies
     // check again that the company is not in favourites.
     if (isCompanyInFavourites({ favouriteCompanies })(company)) {
       return 
