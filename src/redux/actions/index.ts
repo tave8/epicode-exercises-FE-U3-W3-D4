@@ -5,6 +5,7 @@ import { isCompanyInFavourites } from "../../assets/js/helpers"
 export const ADD_COMPANY_TO_FAVOURITE_COMPANIES = "ADD_COMPANY_TO_FAVOURITE_COMPANIES"
 export const REMOVE_COMPANY_FROM_FAVOURITE_COMPANIES = "REMOVE_COMPANY_FROM_FAVOURITE_COMPANIES"
 // SEARCH COMPANIES/JOBS
+export const SET_COMPANIES_SEARCH_QUERY = "SET_COMPANIES_SEARCH_QUERY"
 export const SEARCH_COMPANIES = "SEARCH_COMPANIES"
 
 //***** ACTIONS: FUNCTIONS
@@ -33,8 +34,17 @@ export const removeCompanyFromFavouriteCompaniesAction = (dispatch) => {
 }
 
 // SEARCH COMPANIES/JOBS
+export const setSearchCompaniesQueryAction = (dispatch) => {
+  return (query) => {
+    dispatch({
+      type: SET_COMPANIES_SEARCH_QUERY,
+      payload: query,
+    })
+  }
+}
+
 export const searchCompaniesAction = (dispatch) => {
-  return async ({ searchQuery }) => {
+  return async (searchQuery) => {
     const baseEndpoint = "https://strive-benchmark.herokuapp.com/api/jobs?search="
     try {
       const response = await fetch(baseEndpoint + searchQuery + "&limit=20")

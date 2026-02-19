@@ -1,24 +1,26 @@
-import { useState } from "react"
 import { Container, Row, Col, Form } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import Job from "./Job"
 import { useDispatch, useSelector } from "react-redux"
-import { searchCompaniesAction } from "../redux/actions"
+import { searchCompaniesAction, setSearchCompaniesQueryAction } from "../redux/actions"
+import { useState } from "react"
 
 const MainSearch = () => {
-  const [query, setQuery] = useState("")
+  const companiesSearch = useSelector((state) => state.companiesSearch)
+
+  const [query, setQuery] = useState(companiesSearch.query)
 
   const dispatch = useDispatch()
 
-  const companiesSearchResult = useSelector((state) => state.companiesSearchResult)
-
-  const handleChange = (e) => {
-    setQuery(e.target.value)
+  const handleChange = (event) => {
+    const query = event.target.value
+    setQuery(query)
   }
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    searchCompaniesAction(dispatch)({ searchQuery: query })
+    setSearchCompaniesQueryAction(dispatch)(query)
+    searchCompaniesAction(dispatch)(companiesSearch.query)
   }
 
   return (
@@ -36,7 +38,7 @@ const MainSearch = () => {
           </Form>
         </Col>
         <Col xs={12} className="mx-auto mb-5">
-          {companiesSearchResult.list.map((jobData) => (
+          {companiesSearch.list.map((jobData) => (
             <Job key={jobData._id} company={jobData} />
           ))}
         </Col>
