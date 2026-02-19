@@ -18,7 +18,7 @@ const FavouriteCompanies = () => {
       </Row>
       <Row className="mt-3">
         <Col>
-          <h2>Favourite Companies</h2>
+          <h2>Favourite Companies {favouriteCompanies.list.length > 0 ? ("("+favouriteCompanies.list.length+")") : ""}</h2>
         </Col>
       </Row>
       <Row className="mt-3 gap-3">

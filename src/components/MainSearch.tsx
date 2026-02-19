@@ -1,4 +1,4 @@
-import { Container, Row, Col, Form, Spinner, Alert } from "react-bootstrap"
+import { Container, Row, Col, Form, Spinner, Alert, Badge } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import Job from "./Job"
 import { useDispatch, useSelector } from "react-redux"
@@ -8,6 +8,7 @@ import { useState } from "react"
 const MainSearch = () => {
   // redux store
   const companiesSearch = useSelector((state) => state.companiesSearch)
+  const favouriteCompanies = useSelector((state) => state.favouriteCompanies)
 
   const [query, setQuery] = useState(companiesSearch.query)
 
@@ -31,7 +32,10 @@ const MainSearch = () => {
           <h1 className="display-1">Remote Jobs Search</h1>
         </Col>
         <Col xs={12}>
-          <Link to="/favourite-companies">Favourite Companies</Link>
+          <span>
+            <Link to="/favourite-companies">Favourite Companies</Link>
+            {favouriteCompanies.list.length > 0 ? <Badge bg="success">{favouriteCompanies.list.length}</Badge> : ""}
+          </span>
         </Col>
         <Col xs={12} className="mx-auto">
           <Form onSubmit={handleSubmit}>
