@@ -1,4 +1,4 @@
-import { Container, Row, Col, Form, Spinner } from "react-bootstrap"
+import { Container, Row, Col, Form, Spinner, Alert } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import Job from "./Job"
 import { useDispatch, useSelector } from "react-redux"
@@ -48,7 +48,10 @@ const MainSearch = () => {
           {/* exist search results */}
           {companiesSearch.list.length > 0 && companiesSearch.list.map((jobData) => <Job key={jobData._id} company={jobData} />)}
           {/* not: exist search results */}
-          {companiesSearch.list.length == 0 && companiesSearch.query.length > 0 && !companiesSearch.isLoading &&  <p>No jobs found.</p>}
+          {companiesSearch.list.length == 0 && companiesSearch.query.length > 0 && !companiesSearch.isLoading && !companiesSearch.isError && (
+            <p>No jobs found.</p>
+          )}
+          {companiesSearch.isError && <Alert variant="danger">Problem while fetching results.</Alert>}
         </Col>
       </Row>
     </Container>
