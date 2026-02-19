@@ -1,4 +1,4 @@
-import { Container, Row, Col, Form } from "react-bootstrap"
+import { Container, Row, Col, Form, Spinner } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import Job from "./Job"
 import { useDispatch, useSelector } from "react-redux"
@@ -6,6 +6,7 @@ import { searchCompaniesAction, setSearchCompaniesQueryAction } from "../redux/a
 import { useState } from "react"
 
 const MainSearch = () => {
+  // redux store
   const companiesSearch = useSelector((state) => state.companiesSearch)
 
   const [query, setQuery] = useState(companiesSearch.query)
@@ -37,10 +38,17 @@ const MainSearch = () => {
             <Form.Control type="search" value={query} onChange={handleChange} placeholder="type and press Enter" />
           </Form>
         </Col>
+        {companiesSearch.isLoading && (
+          <div>
+            <Spinner variant="grow"></Spinner>
+          </div>
+        )}
+
         <Col xs={12} className="mx-auto mb-5">
-          {companiesSearch.list.map((jobData) => (
-            <Job key={jobData._id} company={jobData} />
-          ))}
+          {/* exist search results */}
+          {companiesSearch.list.length > 0 && companiesSearch.list.map((jobData) => <Job key={jobData._id} company={jobData} />)}
+          {/* not: exist search results */}
+          {companiesSearch.list.length == 0 && companiesSearch.query.length > 0 && !companiesSearch.isLoading &&  <p>No jobs found.</p>}
         </Col>
       </Row>
     </Container>

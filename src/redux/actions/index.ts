@@ -6,6 +6,8 @@ export const ADD_COMPANY_TO_FAVOURITE_COMPANIES = "ADD_COMPANY_TO_FAVOURITE_COMP
 export const REMOVE_COMPANY_FROM_FAVOURITE_COMPANIES = "REMOVE_COMPANY_FROM_FAVOURITE_COMPANIES"
 // SEARCH COMPANIES/JOBS
 export const SET_COMPANIES_SEARCH_QUERY = "SET_COMPANIES_SEARCH_QUERY"
+export const SET_COMPANIES_SEARCH_IS_LOADING = "SET_COMPANIES_SEARCH_IS_LOADING"
+export const SET_COMPANIES_SEARCH_IS_ERROR = "SET_COMPANIES_SEARCH_IS_ERROR"
 export const SEARCH_COMPANIES = "SEARCH_COMPANIES"
 
 //***** ACTIONS: FUNCTIONS
@@ -43,12 +45,38 @@ export const setSearchCompaniesQueryAction = (dispatch) => {
   }
 }
 
+export const setCompaniesSearchIsLoadingAction = (dispatch) => {
+  return (isLoading) => {
+    dispatch({
+      type: SET_COMPANIES_SEARCH_IS_LOADING,
+      payload: isLoading,
+    })
+  }
+}
+
+export const setCompaniesSearchIsErrorAction = (dispatch) => {
+  return (isError) => {
+    dispatch({
+      type: SET_COMPANIES_SEARCH_IS_ERROR,
+      payload: isError,
+    })
+  }
+}
+
 export const searchCompaniesAction = (dispatch) => {
   return async (searchQuery) => {
     if (searchQuery.trim() == "") {
       alert("Search cannot be empty.")
-      return 
+      return
     }
+    dispatch({
+      type: SET_COMPANIES_SEARCH_IS_LOADING,
+      payload: true,
+    })
+    dispatch({
+      type: SET_COMPANIES_SEARCH_IS_ERROR,
+      payload: false,
+    })
 
     const baseEndpoint = "https://strive-benchmark.herokuapp.com/api/jobs?search="
     try {
@@ -59,10 +87,34 @@ export const searchCompaniesAction = (dispatch) => {
           type: SEARCH_COMPANIES,
           payload: companies,
         })
+        dispatch({
+          type: SET_COMPANIES_SEARCH_IS_LOADING,
+          payload: false,
+        })
+        dispatch({
+          type: SET_COMPANIES_SEARCH_IS_ERROR,
+          payload: false,
+        })
       } else {
+        dispatch({
+          type: SET_COMPANIES_SEARCH_IS_LOADING,
+          payload: false,
+        })
+        dispatch({
+          type: SET_COMPANIES_SEARCH_IS_ERROR,
+          payload: true,
+        })
         alert("Error fetching results")
       }
     } catch (error) {
+      dispatch({
+        type: SET_COMPANIES_SEARCH_IS_LOADING,
+        payload: false,
+      })
+      dispatch({
+        type: SET_COMPANIES_SEARCH_IS_ERROR,
+        payload: true,
+      })
       console.log(error)
     }
   }
