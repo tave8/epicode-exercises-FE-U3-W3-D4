@@ -20,7 +20,7 @@ const MainSearch = () => {
   const handleSubmit = (event) => {
     event.preventDefault()
     setSearchCompaniesQueryAction(dispatch)(query)
-    searchCompaniesAction(dispatch)(companiesSearch.query)
+    searchCompaniesAction(dispatch)(query)
   }
 
   return (

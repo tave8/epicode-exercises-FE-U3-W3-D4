@@ -45,6 +45,11 @@ export const setSearchCompaniesQueryAction = (dispatch) => {
 
 export const searchCompaniesAction = (dispatch) => {
   return async (searchQuery) => {
+    if (searchQuery.trim() == "") {
+      alert("Search cannot be empty.")
+      return 
+    }
+
     const baseEndpoint = "https://strive-benchmark.herokuapp.com/api/jobs?search="
     try {
       const response = await fetch(baseEndpoint + searchQuery + "&limit=20")
