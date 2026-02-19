@@ -4,7 +4,7 @@ import { HeartFill as HeartFillIcon, Plus as PlusIcon } from "react-bootstrap-ic
 
 import type { FavouriteCompany as FavouriteCompanyType, FavouriteCompanies as FavouriteCompaniesType } from "../../types/index"
 
-import { isCompanyInFavourites } from "../../assets/js/helpers.ts"
+import { addCompanyToFavouriteCompaniesAction } from "../../redux/actions/index.ts"
 
 type AddCompProps = {
   company: FavouriteCompanyType
@@ -18,15 +18,7 @@ const AddComp = ({ company, favouriteCompanies }: AddCompProps) => {
     <Button
       variant="success"
       onClick={() => {
-        // check again that the company is not in favourites.
-        // prevents discrepancy between UI and source of truth
-        if (isCompanyInFavourites({ favouriteCompanies })(company)) {
-          return
-        }
-        dispatch({
-          type: "ADD_COMPANY_TO_FAVOURITE_COMPANIES",
-          payload: company,
-        })
+        addCompanyToFavouriteCompaniesAction(dispatch)({ favouriteCompanies, company })
       }}
     >
       <PlusIcon size={20} />
