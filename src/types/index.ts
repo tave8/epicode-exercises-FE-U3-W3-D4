@@ -14,14 +14,14 @@ export interface FavouriteCompanies {
   list: FavouriteCompany[]
 }
 
-export type MyReduxActions = "ADD_COMPANY_TO_FAVOURITE_COMPANIES" | "REMOVE_COMPANY_FROM_FAVOURITE_COMPANIES"
+// export type MyReduxActions = "ADD_COMPANY_TO_FAVOURITE_COMPANIES" | "REMOVE_COMPANY_FROM_FAVOURITE_COMPANIES"
 
 export type MyReduxPayload = FavouriteCompany
 
 
 export interface ReduxAction {
-  type: MyReduxActions
-  payload: MyReduxPayload
+  // type: MyReduxActions
+  // payload: MyReduxPayload
 }
 
 export interface MyReduxAppState {

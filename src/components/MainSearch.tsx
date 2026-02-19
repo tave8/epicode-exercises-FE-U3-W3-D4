@@ -2,31 +2,23 @@ import { useState } from "react"
 import { Container, Row, Col, Form } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import Job from "./Job"
+import { useDispatch, useSelector } from "react-redux"
+import { searchCompaniesAction } from "../redux/actions"
 
 const MainSearch = () => {
   const [query, setQuery] = useState("")
-  const [jobs, setJobs] = useState([])
 
-  const baseEndpoint = "https://strive-benchmark.herokuapp.com/api/jobs?search="
+  const dispatch = useDispatch()
+
+  const companiesSearchResult = useSelector((state) => state.companiesSearchResult)
 
   const handleChange = (e) => {
     setQuery(e.target.value)
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-
-    try {
-      const response = await fetch(baseEndpoint + query + "&limit=20")
-      if (response.ok) {
-        const { data } = await response.json()
-        setJobs(data)
-      } else {
-        alert("Error fetching results")
-      }
-    } catch (error) {
-      console.log(error)
-    }
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    searchCompaniesAction(dispatch)({ searchQuery: query })
   }
 
   return (
@@ -44,7 +36,7 @@ const MainSearch = () => {
           </Form>
         </Col>
         <Col xs={12} className="mx-auto mb-5">
-          {jobs.map((jobData) => (
+          {companiesSearchResult.list.map((jobData) => (
             <Job key={jobData._id} company={jobData} />
           ))}
         </Col>

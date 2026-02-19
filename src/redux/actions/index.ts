@@ -1,10 +1,15 @@
 import { isCompanyInFavourites } from "../../assets/js/helpers"
 
-//***** CONSTANTS
+//***** ACTIONS: CONSTANTS
+// FAVOURITE COMPANIES
 export const ADD_COMPANY_TO_FAVOURITE_COMPANIES = "ADD_COMPANY_TO_FAVOURITE_COMPANIES"
 export const REMOVE_COMPANY_FROM_FAVOURITE_COMPANIES = "REMOVE_COMPANY_FROM_FAVOURITE_COMPANIES"
+// SEARCH COMPANIES/JOBS
+export const SEARCH_COMPANIES = "SEARCH_COMPANIES"
 
-//***** ACTIONS
+//***** ACTIONS: FUNCTIONS
+
+// FAVOURITE COMPANIES
 export const addCompanyToFavouriteCompaniesAction = (dispatch) => {
   return ({ favouriteCompanies, company }) => {
     // check again that the company is not in favourites.
@@ -24,5 +29,26 @@ export const removeCompanyFromFavouriteCompaniesAction = (dispatch) => {
       type: REMOVE_COMPANY_FROM_FAVOURITE_COMPANIES,
       payload: company,
     })
+  }
+}
+
+// SEARCH COMPANIES/JOBS
+export const searchCompaniesAction = (dispatch) => {
+  return async ({ searchQuery }) => {
+    const baseEndpoint = "https://strive-benchmark.herokuapp.com/api/jobs?search="
+    try {
+      const response = await fetch(baseEndpoint + searchQuery + "&limit=20")
+      if (response.ok) {
+        const { data: companies } = await response.json()
+        dispatch({
+          type: SEARCH_COMPANIES,
+          payload: companies,
+        })
+      } else {
+        alert("Error fetching results")
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
