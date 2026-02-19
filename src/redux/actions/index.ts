@@ -38,8 +38,8 @@ export const removeCompanyFromFavouriteCompaniesAction = (dispatch) => {
 }
 
 // SEARCH COMPANIES/JOBS
-export const setSearchCompaniesQueryAction = (dispatch) => {
-  return (query) => {
+export const setSearchCompaniesQueryAction = (query) => {
+  return (dispatch, getState) => {
     dispatch({
       type: SET_COMPANIES_SEARCH_QUERY,
       payload: query,
@@ -65,8 +65,9 @@ export const setCompaniesSearchIsErrorAction = (dispatch) => {
   }
 }
 
-export const searchCompaniesAction = (dispatch) => {
-  return async (searchQuery) => {
+export const searchCompaniesAction = () => {
+  return async (dispatch, getState) => {
+    const searchQuery = getState().companiesSearch.query
     if (searchQuery.trim() == "") {
       alert("Search cannot be empty.")
       return

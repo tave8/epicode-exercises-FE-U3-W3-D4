@@ -21,8 +21,8 @@ const MainSearch = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    setSearchCompaniesQueryAction(dispatch)(query)
-    searchCompaniesAction(dispatch)(query)
+    dispatch(setSearchCompaniesQueryAction(query))
+    dispatch(searchCompaniesAction(query))
   }
 
   return (
