@@ -7,19 +7,21 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 
 // redux stuff
 import { Provider } from "react-redux"
-import store from "./redux/store/index.ts"
-
+import { store, persistedStore } from "./redux/store/index.ts"
+import { PersistGate } from "redux-persist/integration/react"
 
 function App() {
   return (
     <Provider store={store}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<MainSearch />} />
-          <Route path="/favourite-companies" element={<FavouriteCompanies />} />
-          <Route path="/:company" element={<CompanySearchResults />} />
-        </Routes>
-      </BrowserRouter>
+      <PersistGate persistor={persistedStore}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<MainSearch />} />
+            <Route path="/favourite-companies" element={<FavouriteCompanies />} />
+            <Route path="/:company" element={<CompanySearchResults />} />
+          </Routes>
+        </BrowserRouter>
+      </PersistGate>
     </Provider>
   )
 }
